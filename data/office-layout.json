@@ -1,0 +1,21 @@
+{
+  "width": 6,
+  "height": 4,
+  "seats": [
+    {
+      "agentId": "main",
+      "x": 1,
+      "y": 1
+    },
+    {
+      "agentId": "cog",
+      "x": 3,
+      "y": 1
+    },
+    {
+      "agentId": "albert",
+      "x": 5,
+      "y": 1
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+  --background: #090b10;
+  --foreground: #e2e8f0;
+  --muted: #94a3b8;
+  --panel: #0f131b;
+  --panel-strong: #121a26;
+  --border: rgba(148, 163, 184, 0.2);
+  --accent: #38bdf8;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-panel: var(--panel);
+  --color-panel-strong: var(--panel-strong);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --font-sans: var(--font-space-grotesk);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+* {
+  border-color: var(--border);
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 18% -12%, rgba(56, 189, 248, 0.24), transparent 35%),
+    radial-gradient(circle at 85% -22%, rgba(37, 99, 235, 0.16), transparent 38%),
+    var(--background);
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-space-grotesk), "Avenir Next", sans-serif;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 40%, transparent);
+}
