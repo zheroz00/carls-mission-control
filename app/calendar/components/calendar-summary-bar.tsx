@@ -1,7 +1,7 @@
 "use client";
 
 type KindFilter = "all" | "cron" | "proactive";
-type SourceFilter = "all" | "local" | "gateway";
+type SourceFilter = "all" | "local" | "gateway" | "openclaw-config" | "gateway-rpc";
 type ViewMode = "week" | "today";
 
 interface CalendarSummaryBarProps {
@@ -126,6 +126,8 @@ export default function CalendarSummaryBar({
           <option value="all">All Sources</option>
           <option value="local">Local</option>
           <option value="gateway">Gateway</option>
+          <option value="openclaw-config">OpenClaw Config</option>
+          <option value="gateway-rpc">Gateway RPC</option>
         </select>
         <button
           type="button"

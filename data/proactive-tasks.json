@@ -1,16 +1,1 @@
-[
-  {
-    "id": "proactive-standup-brief",
-    "title": "Generate standup brief",
-    "dueAt": "2026-03-04T13:00:00.000Z",
-    "status": "queued",
-    "source": "local"
-  },
-  {
-    "id": "proactive-memory-gap",
-    "title": "Backfill missing memory windows",
-    "dueAt": "2026-03-05T10:00:00.000Z",
-    "status": "active",
-    "source": "local"
-  }
-]
+[]

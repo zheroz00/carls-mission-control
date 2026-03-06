@@ -74,7 +74,7 @@ async function readOpenClawFileConfig(): Promise<OpenClawFileConfig | null> {
   }
 }
 
-async function resolveGatewayConfig(): Promise<GatewayConfig> {
+export async function resolveGatewayConfig(): Promise<GatewayConfig> {
   if (gatewayConfigCache) {
     return gatewayConfigCache;
   }

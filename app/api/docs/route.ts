@@ -7,38 +7,7 @@ import { NextResponse } from "next/server";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const DEFAULT_DOCS: DocItem[] = [
-  {
-    id: "doc-ops-runbook",
-    title: "OpenClaw Operations Runbook",
-    content:
-      "Primary escalation and recovery process for Mission Control operators. Includes checkpoint cadence, incident ownership, and rollback policies.",
-    tags: ["runbook", "operations", "incident"],
-    updatedAt: "2026-03-02T19:30:00.000Z",
-    source: "local",
-    path: "docs/runbook/openclaw-operations.md",
-  },
-  {
-    id: "doc-memory-standard",
-    title: "Memory Structuring Standard",
-    content:
-      "Defines required metadata for daily memory artifacts, expected retention windows, and sync responsibilities for Carl outputs.",
-    tags: ["memory", "standards", "schema"],
-    updatedAt: "2026-03-01T16:10:00.000Z",
-    source: "local",
-    path: "docs/standards/memory-structure.md",
-  },
-  {
-    id: "doc-proactive-guidelines",
-    title: "Proactive Task Authoring",
-    content:
-      "How Carl should generate proactive work items, including naming conventions, SLA defaults, and assignment heuristics.",
-    tags: ["proactive", "automation"],
-    updatedAt: "2026-02-28T12:00:00.000Z",
-    source: "local",
-    path: "docs/guides/proactive-task-authoring.md",
-  },
-];
+const DEFAULT_DOCS: DocItem[] = [];
 
 function asString(value: unknown, fallback: string): string {
   if (typeof value === "string" && value.trim().length > 0) {

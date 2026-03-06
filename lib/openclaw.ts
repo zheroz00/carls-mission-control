@@ -1,4 +1,5 @@
 import { readJsonFile, writeJsonFile } from "@/lib/data";
+import { isRpcAvailable, rpcAgentsList, RpcAgent } from "@/lib/gateway-rpc";
 import { asString, makeId, toIso } from "@/lib/model-utils";
 import {
   MissionProfile,
@@ -102,7 +103,48 @@ export async function writeTeamOverrides(overrides: TeamOverride[]): Promise<voi
   await writeJsonFile("team-overrides.json", overrides);
 }
 
+function rpcAgentToMember(agent: RpcAgent, override?: TeamOverride): TeamMember {
+  const id = agent.id;
+  const isDefault = agent.default || id === "main";
+  const member: TeamMember = {
+    id,
+    displayName:
+      override?.displayName ??
+      agent.displayName ??
+      id.slice(0, 1).toUpperCase() + id.slice(1),
+    role: override?.role ?? (isDefault ? "Orchestrator" : "Specialist"),
+    model: agent.model ?? "unknown",
+    workspace: agent.workspace ?? "unknown",
+    level: override?.level ?? (isDefault ? "main" : "subagent"),
+    source: override ? "localOverride" : "gateway-rpc",
+  };
+  if (override?.deviceLabel) {
+    member.deviceLabel = override.deviceLabel;
+  }
+  return member;
+}
+
+async function readTeamMembersFromRpc(): Promise<TeamMember[]> {
+  const agents = await rpcAgentsList();
+  const overrides = await readTeamOverrides();
+  const overrideById = new Map(overrides.map((item) => [item.id, item]));
+
+  return agents
+    .filter((a) => a.id)
+    .map((agent) => rpcAgentToMember(agent, overrideById.get(agent.id)))
+    .sort((a, b) => a.id.localeCompare(b.id));
+}
+
 export async function readTeamMembers(): Promise<TeamMember[]> {
+  if (isRpcAvailable()) {
+    try {
+      const members = await readTeamMembersFromRpc();
+      if (members.length > 0) return members;
+    } catch (err) {
+      console.warn("[openclaw] RPC agents.list failed, falling back to file:", err);
+    }
+  }
+
   const config = await readOpenClawConfig();
   const overrides = await readTeamOverrides();
   const overrideById = new Map(overrides.map((item) => [item.id, item]));

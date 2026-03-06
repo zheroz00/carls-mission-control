@@ -1,51 +1,15 @@
 import { readJsonFile } from "@/lib/data";
 import { fetchGatewayCollection, fetchGatewayStatus } from "@/lib/gateway";
+import { readOpenClawSchedules } from "@/lib/openclaw-schedules";
 import { CalendarPayload, CronJob, ProactiveTask } from "@/lib/types";
 import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const DEFAULT_CRON_JOBS: CronJob[] = [
-  {
-    id: "cron-memory-rollup",
-    name: "Memory Rollup",
-    schedule: "0 */2 * * *",
-    nextRun: "2026-03-03T18:00:00.000Z",
-    source: "local",
-  },
-  {
-    id: "cron-doc-index",
-    name: "Docs Index Rebuild",
-    schedule: "15 * * * *",
-    nextRun: "2026-03-03T17:15:00.000Z",
-    source: "local",
-  },
-  {
-    id: "cron-signal-scan",
-    name: "Signal Drift Scan",
-    schedule: "30 6 * * *",
-    nextRun: "2026-03-04T06:30:00.000Z",
-    source: "local",
-  },
-];
+const DEFAULT_CRON_JOBS: CronJob[] = [];
 
-const DEFAULT_PROACTIVE_TASKS: ProactiveTask[] = [
-  {
-    id: "proactive-standup-brief",
-    title: "Generate standup brief",
-    dueAt: "2026-03-04T13:00:00.000Z",
-    status: "queued",
-    source: "local",
-  },
-  {
-    id: "proactive-memory-gap",
-    title: "Backfill missing memory windows",
-    dueAt: "2026-03-05T10:00:00.000Z",
-    status: "active",
-    source: "local",
-  },
-];
+const DEFAULT_PROACTIVE_TASKS: ProactiveTask[] = [];
 
 function asString(value: unknown, fallback: string): string {
   if (typeof value === "string" && value.trim().length > 0) {
@@ -114,7 +78,7 @@ function dedupeById<T extends { id: string }>(items: T[]): T[] {
 }
 
 export async function GET() {
-  const [localCronJobs, localProactiveTasks, gatewayStatus, gatewayCronResult, gatewayProactiveResult] =
+  const [localCronJobs, localProactiveTasks, gatewayStatus, gatewayCronResult, gatewayProactiveResult, openclawSchedules] =
     await Promise.all([
       readJsonFile<CronJob[]>("cron-jobs.json", DEFAULT_CRON_JOBS),
       readJsonFile<ProactiveTask[]>("proactive-tasks.json", DEFAULT_PROACTIVE_TASKS),
@@ -131,6 +95,7 @@ export async function GET() {
         "/proactive/tasks",
         "/tasks/proactive",
       ]),
+      readOpenClawSchedules(),
     ]);
 
   const gatewayCronJobs = gatewayCronResult.items
@@ -142,7 +107,11 @@ export async function GET() {
     .filter((item): item is ProactiveTask => Boolean(item));
 
   const cronJobs = dedupeById(
-    [...localCronJobs.map((item) => normalizeCronJob(item, "local")), ...gatewayCronJobs].filter(
+    [
+      ...openclawSchedules,
+      ...localCronJobs.map((item) => normalizeCronJob(item, "local")),
+      ...gatewayCronJobs,
+    ].filter(
       (item): item is CronJob => Boolean(item),
     ),
   ).sort((a, b) => a.nextRun.localeCompare(b.nextRun));

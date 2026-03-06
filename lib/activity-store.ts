@@ -5,16 +5,7 @@ import { publishActivity } from "@/lib/activity-bus";
 
 const VALID_KINDS: ActivityKind[] = ["task", "cron", "memory", "docs", "system"];
 
-const DEFAULT_ACTIVITY_EVENTS: ActivityEvent[] = [
-  {
-    id: "evt-1",
-    ts: "2026-03-03T09:00:00.000Z",
-    actorId: "main",
-    kind: "system",
-    message: "Mission Control initialized with local fallback datasets.",
-    source: "local",
-  },
-];
+const DEFAULT_ACTIVITY_EVENTS: ActivityEvent[] = [];
 
 function normalizeKind(value: unknown): ActivityKind {
   const kind = asString(value);

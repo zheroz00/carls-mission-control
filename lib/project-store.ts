@@ -8,34 +8,7 @@ import {
 } from "@/lib/model-utils";
 import { Project, ProjectStatus } from "@/lib/types";
 
-export const DEFAULT_PROJECTS: Project[] = [
-  {
-    id: "project-mission-control-core",
-    name: "Mission Control Core",
-    objective:
-      "Ship core board/calendar/memory/docs workflows with reliable local fallback.",
-    status: "active",
-    ownerId: "main",
-    createdAt: "2026-03-01T08:00:00.000Z",
-    updatedAt: "2026-03-02T18:30:00.000Z",
-    linkedTaskIds: ["task-1", "task-2", "task-4"],
-    linkedDocIds: ["doc-ops-runbook"],
-    linkedMemoryIds: [],
-  },
-  {
-    id: "project-autonomy-expansion",
-    name: "Autonomy Expansion",
-    objective:
-      "Improve observability and readiness for future autonomous workflows.",
-    status: "paused",
-    ownerId: "cog",
-    createdAt: "2026-03-01T10:00:00.000Z",
-    updatedAt: "2026-03-02T11:00:00.000Z",
-    linkedTaskIds: ["task-3"],
-    linkedDocIds: ["doc-proactive-guidelines"],
-    linkedMemoryIds: [],
-  },
-];
+export const DEFAULT_PROJECTS: Project[] = [];
 
 const VALID_PROJECT_STATUS: ProjectStatus[] = ["active", "paused", "completed"];
 

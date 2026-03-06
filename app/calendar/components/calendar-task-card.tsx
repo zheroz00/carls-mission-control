@@ -7,7 +7,7 @@ export interface CalendarEvent {
   title: string;
   time: string;
   kind: "cron" | "proactive";
-  source: "local" | "gateway";
+  source: "local" | "gateway" | "openclaw-config" | "gateway-rpc";
   color: TaskColor;
   schedule?: string;
   status?: string;

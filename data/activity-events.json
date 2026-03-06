@@ -1,22 +1,14 @@
 [
   {
-    "id": "evt-mmco40v5-x9pdl1",
-    "ts": "2026-03-04T23:28:34.145Z",
-    "actorId": "albert",
+    "id": "evt-mmebz708-17o97e",
+    "ts": "2026-03-06T03:24:25.784Z",
+    "actorId": "main",
     "kind": "task",
-    "message": "Control created task \"Demo task 23:28:34\"",
+    "message": "Created task \"task test\"",
     "metadata": {
-      "taskId": "task-mmco40v4-c63brj",
+      "taskId": "task-mmebz707-n7qwb7",
       "column": "todo"
     },
-    "source": "local"
-  },
-  {
-    "id": "evt-1",
-    "ts": "2026-03-03T09:00:00.000Z",
-    "actorId": "main",
-    "kind": "system",
-    "message": "Mission Control initialized with local fallback datasets.",
     "source": "local"
   }
 ]

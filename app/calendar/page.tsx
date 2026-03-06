@@ -11,7 +11,7 @@ import type { CalendarEvent } from "./components/calendar-task-card";
 import type { DayInfo } from "./components/calendar-day-column";
 
 type KindFilter = "all" | "cron" | "proactive";
-type SourceFilter = "all" | "local" | "gateway";
+type SourceFilter = "all" | "local" | "gateway" | "openclaw-config" | "gateway-rpc";
 type ViewMode = "week" | "today";
 
 const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];

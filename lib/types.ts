@@ -20,7 +20,7 @@ export interface CronJob {
   name: string;
   schedule: string;
   nextRun: string;
-  source: "local" | "gateway";
+  source: "local" | "gateway" | "openclaw-config" | "gateway-rpc";
   color?: string;
 }
 
@@ -81,7 +81,7 @@ export interface Project {
 }
 
 export type TeamMemberLevel = "main" | "subagent" | "worker";
-export type TeamMemberSource = "config" | "localOverride";
+export type TeamMemberSource = "config" | "localOverride" | "gateway-rpc";
 
 export interface TeamMember {
   id: string;
